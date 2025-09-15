@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My To-Do List - Sarathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .glow-card {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+    }
+    .glow-text {
+      text-shadow: 0 0 12px #00ffe7, 0 0 24px #00ffe7;
+    }
+    .todo-checkbox:checked + span {
+      text-decoration: line-through;
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white font-sans">
+  <!-- Navbar -->
+  <div class="flex items-center justify-between w-full px-4 py-3 md:px-8 md:py-4 z-20 relative">
+    <!-- Logo -->
+    <div class="flex items-center">
+  <a href="home.html"><img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-md border-2 border-cyan-400 bg-black/60" style="backdrop-filter: blur(2px);"></a>
+      <span class="ml-3 text-2xl font-bold text-cyan-200 hidden sm:inline">Sarathi</span>
+    </div>
+    <!-- Back to Dashboard -->
+    <a href="student_dashboard.html" class="flex items-center text-cyan-300 hover:text-white font-semibold transition text-lg"><span class="material-icons mr-1">arrow_back</span>Back to Dashboard</a>
+  </div>
+
+  <!-- To-Do Container -->
+  <main class="flex flex-col items-center justify-center flex-1 px-4 py-8">
+    <div class="w-full max-w-lg bg-black/80 border-2 border-cyan-400 rounded-2xl p-8 shadow-2xl glow-card">
+      <h2 class="text-2xl font-bold glow-text mb-6 text-center">My To-Do List</h2>
+      <form id="todoForm" class="flex mb-6 gap-2">
+        <input id="todoInput" type="text" placeholder="Add a new task..." class="flex-1 px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" required>
+        <button type="submit" class="px-5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-semibold shadow-md transition-all">Add</button>
+      </form>
+      <ul id="todoList" class="space-y-3">
+        <!-- Tasks will be rendered here -->
+      </ul>
+    </div>
+  </main>
+
+  <script>
+    // To-Do List Logic
+    const todoForm = document.getElementById('todoForm');
+    const todoInput = document.getElementById('todoInput');
+    const todoList = document.getElementById('todoList');
+    let tasks = JSON.parse(localStorage.getItem('sarathiTasks') || '[]');
+
+    function saveTasks() {
+      localStorage.setItem('sarathiTasks', JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      todoList.innerHTML = '';
+      tasks.forEach((task, idx) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center bg-cyan-900/60 rounded-xl px-4 py-3 shadow-md';
+        li.innerHTML = `
+          <input type="checkbox" class="todo-checkbox mr-3 h-5 w-5 accent-cyan-400 rounded" ${task.completed ? 'checked' : ''} data-idx="${idx}">
+          <span class="flex-1 text-lg ${task.completed ? 'line-through text-gray-400' : ''}">${task.text}</span>
+          <button class="ml-3 text-pink-400 hover:text-pink-600 material-icons" data-del="${idx}">delete</button>
+        `;
+        todoList.appendChild(li);
+      });
+    }
+
+    todoForm.onsubmit = function(e) {
+      e.preventDefault();
+      const text = todoInput.value.trim();
+      if(text) {
+        tasks.push({ text, completed: false });
+        saveTasks();
+        renderTasks();
+        todoInput.value = '';
+      }
+    };
+
+    todoList.onclick = function(e) {
+      if(e.target.matches('.todo-checkbox')) {
+        const idx = e.target.getAttribute('data-idx');
+        tasks[idx].completed = e.target.checked;
+        saveTasks();
+        renderTasks();
+      } else if(e.target.matches('[data-del]')) {
+        const idx = e.target.getAttribute('data-del');
+        tasks.splice(idx, 1);
+        saveTasks();
+        renderTasks();
+      }
+    };
+
+    renderTasks();
+  </script>
+</body>
+</html>

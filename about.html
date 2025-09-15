@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Sarathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .glow-card {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+    }
+    .glow-text {
+      text-shadow: 0 0 12px #00ffe7, 0 0 24px #00ffe7;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white font-sans">
+  <!-- Navbar -->
+  <div class="flex items-center justify-between w-full px-4 py-3 md:px-8 md:py-4 z-20 relative">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <a href="home.html"><img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-md border-2 border-cyan-400 bg-black/60" style="backdrop-filter: blur(2px);"></a>
+      <span class="ml-3 text-2xl font-bold text-cyan-200 hidden sm:inline">Sarathi</span>
+    </div>
+    <!-- Back to Home -->
+    <a href="home.html" class="flex items-center text-cyan-300 hover:text-white font-semibold transition text-lg"><span class="material-icons mr-1">arrow_back</span>Home</a>
+  </div>
+
+  <!-- About Container -->
+  <main class="flex flex-col items-center justify-center flex-1 px-4 py-8">
+    <div class="w-full max-w-2xl bg-black/80 border-2 border-cyan-400 rounded-2xl p-8 shadow-2xl glow-card">
+      <h2 class="text-3xl font-bold glow-text mb-4 text-center">About Us</h2>
+      <p class="text-cyan-100 text-lg mb-6 text-center">
+        Sarathi is a gamified learning platform designed to make education fun, interactive, and accessible for every student — especially those in rural areas. Our mission is to combine learning with play, ensuring that students not only gain knowledge but also enjoy the journey. With lessons, games, challenges, and rewards, we aim to build curiosity and confidence in young learners.
+      </p>
+      <p class="text-cyan-200 text-base mb-8 text-center">
+        This platform is proudly built by <span class="font-semibold text-cyan-300">Team Radiant Decoders</span>, a group of passionate innovators working together to bring change through technology.
+      </p>
+      <div class="mb-2">
+        <h3 class="text-xl font-semibold text-cyan-300 mb-2 text-center">Our Team</h3>
+        <ul class="flex flex-wrap justify-center gap-4 text-cyan-100 text-lg font-medium">
+          <li>Ravikiran</li>
+          <li>Dhanush</li>
+          <li>Moukthika</li>
+          <li>Tarun</li>
+          <li>Shashank</li>
+          <li>Yahsaswi</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</body>
+</html>

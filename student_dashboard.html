@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Sarathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .circuit-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+    .glow-card {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .glow-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 0 32px #00ffe7, 0 0 64px #00ffe7;
+      z-index: 2;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white font-sans">
+  <!-- Animated SVG Circuit Background -->
+  <svg class="circuit-bg" viewBox="0 0 1920 1080" fill="none">
+    <g stroke="#00ffe7" stroke-width="2">
+      <polyline id="circuit1" points="100,200 400,200 600,400 900,400 1200,200 1600,200"/>
+      <polyline id="circuit2" points="200,800 600,800 800,600 1200,600 1500,800 1800,800"/>
+      <polyline id="circuit3" points="300,500 700,500 960,300 1300,500 1700,500"/>
+    </g>
+    <circle id="pulse1" r="8" fill="#00ffe7"/>
+    <circle id="pulse2" r="8" fill="#00ffe7"/>
+    <circle id="pulse3" r="8" fill="#00ffe7"/>
+  </svg>
+  <div id="stars"></div>
+
+
+  <!-- Top Bar -->
+  <div class="flex items-center justify-between w-full px-4 py-3 md:px-8 md:py-4 z-20 relative">
+    <!-- Logo -->
+    <div class="flex items-center">
+  <a href="home.html"><img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-md border-2 border-cyan-400 bg-black/60" style="backdrop-filter: blur(2px);"></a>
+      <span class="ml-3 text-2xl font-bold text-cyan-200 hidden sm:inline">Sarathi</span>
+    </div>
+    <!-- Navigation Bar -->
+    <nav class="flex items-center space-x-3 md:space-x-6 bg-black/60 rounded-full px-3 py-2 shadow-lg">
+  <a href="profile.html" class="flex flex-col items-center text-cyan-200 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">account_circle</span><span class="hidden md:inline">Profile</span></a>
+  <a href="todo.html" class="flex flex-col items-center text-cyan-200 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">check_circle</span><span class="hidden md:inline">To-Do</span></a>
+      <a href="#rewards" class="flex flex-col items-center text-cyan-200 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">emoji_events</span><span class="hidden md:inline">Rewards</span></a>
+      <a href="#notifications" class="flex flex-col items-center text-cyan-200 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">notifications</span><span class="hidden md:inline">Notifications</span></a>
+      <a href="#settings" class="flex flex-col items-center text-cyan-200 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">settings</span><span class="hidden md:inline">Settings</span></a>
+      <a href="#signout" class="flex flex-col items-center text-pink-300 hover:text-white transition text-xs md:text-base"><span class="material-icons md-20">logout</span><span class="hidden md:inline">Sign Out</span></a>
+    </nav>
+  </div>
+
+  <!-- Greeting -->
+  <header class="z-10 relative w-full max-w-3xl mx-auto mt-6 mb-8 px-4">
+    <h1 id="greeting" class="text-3xl md:text-4xl font-bold glow-text">Welcome, Student</h1>
+  </header>
+  <!-- Google Material Icons CDN -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Subject Cards Grid -->
+  <main class="z-10 relative w-full max-w-4xl mx-auto flex-1 px-4 pb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+  <a href="shindi.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">हिन्दी</a>
+  <a href="stelugu.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">తెలుగు</a>
+    <a href="senglish.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">English</a>
+    <a href="smath.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">Maths</a>
+    <a href="sphy.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">Physics</a>
+    <a href="sbio.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">Biology</a>
+    <a href="ssoc.html" class="glow-card bg-black/80 border-2 border-cyan-400 rounded-2xl flex items-center justify-center h-36 text-2xl font-bold text-cyan-200 hover:bg-cyan-950/80 transition-all">Social</a>
+    </div>
+  </main>
+
+  <script>
+    // --- Animated Circuit Pulses ---
+    function animatePulse(polyId, pulseId, duration) {
+      const poly = document.getElementById(polyId);
+      const pulse = document.getElementById(pulseId);
+      const points = poly.getAttribute('points').split(' ').map(pt => pt.split(',').map(Number));
+      let t = 0, dir = 1;
+      function lerp(a, b, t) { return [a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]; }
+      function animate() {
+        let seg = Math.floor(t);
+        let localT = t - seg;
+        if (seg >= points.length-1) { seg = points.length-2; localT = 1; }
+        const [x, y] = lerp(points[seg], points[seg+1], localT);
+        pulse.setAttribute('cx', x);
+        pulse.setAttribute('cy', y);
+        t += dir * 0.01 * (points.length-1) / (duration/16);
+        if (t >= points.length-1 || t <= 0) dir *= -1;
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+    animatePulse('circuit1', 'pulse1', 4000);
+    animatePulse('circuit2', 'pulse2', 5000);
+    animatePulse('circuit3', 'pulse3', 6000);
+
+    // --- Stars/Sparkles ---
+    function createStars() {
+      const starCount = 40;
+      const stars = document.getElementById('stars');
+      stars.innerHTML = '';
+      for (let i = 0; i < starCount; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.width = s.style.height = (Math.random()*2+1)+'px';
+        s.style.left = (Math.random()*100)+'vw';
+        s.style.top = (Math.random()*100)+'vh';
+        s.style.opacity = Math.random()*0.5+0.3;
+        s.style.animation = `twinkle ${2+Math.random()*2}s infinite alternate`;
+        stars.appendChild(s);
+      }
+    }
+    createStars();
+    window.addEventListener('resize', createStars);
+    // Twinkle animation
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }`;
+    document.head.appendChild(style);
+
+    // --- Greeting (Student Name) ---
+    // You can set student name in localStorage/sessionStorage after login
+    const studentName = localStorage.getItem('studentName') || 'Student';
+    document.getElementById('greeting').textContent = `Welcome, ${studentName}`;
+  </script>
+</body>
+</html>

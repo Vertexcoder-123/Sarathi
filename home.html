@@ -1,0 +1,233 @@
+
+
+		<!-- ...existing code... -->
+
+		<!-- About Us Section at the very bottom (footer) -->
+		<!-- <footer class="w-full flex flex-col items-center justify-center mt-32 mb-8 z-20 relative">
+			<div class="max-w-2xl bg-black/70 border border-cyan-400 rounded-2xl p-6 shadow-lg text-center">
+				<h3 class="text-2xl font-bold text-cyan-200 mb-2">About Us</h3>
+				<p class="text-cyan-100 mb-4">Sarathi is a gamified learning platform designed to make education fun, interactive, and accessible for every student — especially those in rural areas. <span class="hidden md:inline">Our mission is to combine learning with play, ensuring that students not only gain knowledge but also enjoy the journey.</span></p>
+				<a href="about.html" class="inline-block px-6 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-white font-semibold shadow-md transition-all">Learn More</a>
+			</div>
+		</footer> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sarathi - Guiding Every Learner</title>
+	<!-- Tailwind CSS CDN -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body {
+			background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+		.circuit-bg {
+			position: fixed;
+			top: 0; left: 0; width: 100vw; height: 100vh;
+			z-index: 0;
+			pointer-events: none;
+			opacity: 0.25;
+		}
+		.glow {
+			text-shadow: 0 0 16px #00ffe7, 0 0 32px #00ffe7;
+		}
+		.star {
+			position: absolute;
+			border-radius: 50%;
+			background: white;
+			opacity: 0.7;
+			pointer-events: none;
+		}
+		.slide-in {
+			transform: translateY(60px);
+			opacity: 0;
+			transition: all 0.6s cubic-bezier(.4,2,.3,1);
+		}
+		.slide-in.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		.flip-card {
+			perspective: 1000px;
+		}
+		.flip-card-inner {
+			transition: transform 0.6s cubic-bezier(.4,2,.3,1);
+			transform-style: preserve-3d;
+		}
+		.flip-card.flipped .flip-card-inner {
+			transform: rotateY(180deg);
+		}
+		.flip-card-front, .flip-card-back {
+			backface-visibility: hidden;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0; left: 0;
+		}
+		.flip-card-back {
+			transform: rotateY(180deg);
+		}
+	</style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between text-white font-sans">
+	<!-- Animated SVG Circuit Background -->
+	<svg class="circuit-bg" viewBox="0 0 1920 1080" fill="none">
+		<g stroke="#00ffe7" stroke-width="2">
+			<polyline id="circuit1" points="100,200 400,200 600,400 900,400 1200,200 1600,200"/>
+			<polyline id="circuit2" points="200,800 600,800 800,600 1200,600 1500,800 1800,800"/>
+			<polyline id="circuit3" points="300,500 700,500 960,300 1300,500 1700,500"/>
+		</g>
+		<circle id="pulse1" r="8" fill="#00ffe7"/>
+		<circle id="pulse2" r="8" fill="#00ffe7"/>
+		<circle id="pulse3" r="8" fill="#00ffe7"/>
+	</svg>
+	<div id="stars"></div>
+
+	<!-- Top Bar -->
+	<div class="flex justify-between items-center px-8 pt-6 z-10 relative">
+		<img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-lg border-2 border-cyan-400 bg-black/60" style="backdrop-filter: blur(2px);">
+		<nav class="space-x-6 text-cyan-200 text-lg font-medium">
+			<a href="about.html" class="hover:text-white transition">About</a>
+			<a href="#contact" class="hover:text-white transition">Contact</a>
+			<a href="language.html" class="hover:text-white transition">Language</a>
+		</nav>
+	</div>
+
+	<!-- Center Section -->
+	<main class="flex flex-col items-center justify-center flex-1 z-10 relative select-none">
+		<img id="main-logo" src="logo.png.jpg" alt="Sarathi Logo" class="h-32 w-32 md:h-48 md:w-48 rounded-full shadow-2xl border-4 border-cyan-400 bg-black/70 opacity-0 scale-75 transition-all duration-1000">
+		<h1 id="app-name" class="mt-8 text-5xl md:text-7xl font-extrabold glow opacity-0 transition-all duration-1000">Sarathi</h1>
+		<p id="quote" class="mt-6 text-xl md:text-2xl text-cyan-100 font-light max-w-xl text-center min-h-[48px]"></p>
+	</main>
+
+
+		<!-- Bottom Section -->
+		<div class="flex flex-col items-center mb-16 z-10 relative">
+			<button id="start-btn" class="mt-8 px-10 py-4 text-2xl font-bold rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 shadow-xl glow transition-all duration-300 hover:scale-105 hover:from-cyan-300 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-cyan-400/50">
+				Start Your Journey
+			</button>
+			<div id="options" class="flex space-x-8 mt-10 opacity-0 pointer-events-none transition-all duration-700">
+				<!-- Student Card -->
+				<div class="slide-in bg-black/70 border-2 border-cyan-400 rounded-2xl p-8 w-64 flex flex-col items-center shadow-lg cursor-pointer hover:scale-105 transition-all" onclick="window.location.href='login.html?type=student'">
+					<span class="text-4xl mb-2">🎓</span>
+					<span class="text-xl font-semibold mb-1">For Students</span>
+					<span class="text-cyan-200 text-sm">Learning School</span>
+				</div>
+				<!-- Teacher Card -->
+				<div class="slide-in bg-black/70 border-2 border-cyan-400 rounded-2xl p-8 w-64 flex flex-col items-center shadow-lg cursor-pointer hover:scale-105 transition-all" onclick="window.location.href='login.html?type=teacher'">
+					<span class="text-4xl mb-2">👩‍🏫</span>
+					<span class="text-xl font-semibold mb-1">For Teachers</span>
+					<span class="text-cyan-200 text-sm">Get the Code (Dashboard)</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- About Us Section (immediately after Start Your Journey) -->
+		<div class="w-full flex flex-col items-center justify-center mt-8 mb-8 z-20 relative">
+			<div class="max-w-2xl bg-black/70 border border-cyan-400 rounded-2xl p-6 shadow-lg text-center">
+				<h3 class="text-2xl font-bold text-cyan-200 mb-2">About Us</h3>
+				<p class="text-cyan-100 mb-4">Sarathi is a gamified learning platform designed to make education fun, interactive, and accessible for every student — especially those in rural areas. <span class="hidden md:inline">Our mission is to combine learning with play, ensuring that students not only gain knowledge but also enjoy the journey.</span></p>
+				<a href="about.html" class="inline-block px-6 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-white font-semibold shadow-md transition-all">Learn More</a>
+			</div>
+		</div>
+
+	<script>
+		// --- Animated Circuit Pulses ---
+		function animatePulse(polyId, pulseId, duration) {
+			const poly = document.getElementById(polyId);
+			const pulse = document.getElementById(pulseId);
+			const points = poly.getAttribute('points').split(' ').map(pt => pt.split(',').map(Number));
+			let t = 0, dir = 1;
+			function lerp(a, b, t) { return [a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]; }
+			function animate() {
+				let seg = Math.floor(t);
+				let localT = t - seg;
+				if (seg >= points.length-1) { seg = points.length-2; localT = 1; }
+				const [x, y] = lerp(points[seg], points[seg+1], localT);
+				pulse.setAttribute('cx', x);
+				pulse.setAttribute('cy', y);
+				t += dir * 0.01 * (points.length-1) / (duration/16);
+				if (t >= points.length-1 || t <= 0) dir *= -1;
+				requestAnimationFrame(animate);
+			}
+			animate();
+		}
+		animatePulse('circuit1', 'pulse1', 4000);
+		animatePulse('circuit2', 'pulse2', 5000);
+		animatePulse('circuit3', 'pulse3', 6000);
+
+		// --- Stars/Sparkles ---
+		function createStars() {
+			const starCount = 60;
+			const stars = document.getElementById('stars');
+			stars.innerHTML = '';
+			for (let i = 0; i < starCount; i++) {
+				const s = document.createElement('div');
+				s.className = 'star';
+				s.style.width = s.style.height = (Math.random()*2+1)+'px';
+				s.style.left = (Math.random()*100)+'vw';
+				s.style.top = (Math.random()*100)+'vh';
+				s.style.opacity = Math.random()*0.5+0.3;
+				s.style.animation = `twinkle ${2+Math.random()*2}s infinite alternate`;
+				stars.appendChild(s);
+			}
+		}
+		createStars();
+		window.addEventListener('resize', createStars);
+		// Twinkle animation
+		const style = document.createElement('style');
+		style.innerHTML = `@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }`;
+		document.head.appendChild(style);
+
+		// --- Logo Fade In ---
+		window.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				document.getElementById('main-logo').classList.remove('opacity-0','scale-75');
+				document.getElementById('main-logo').classList.add('opacity-100','scale-100');
+				setTimeout(() => {
+					document.getElementById('app-name').classList.remove('opacity-0');
+					document.getElementById('app-name').classList.add('opacity-100');
+				}, 400);
+			}, 300);
+		});
+
+		// --- Typing Animation for Quote ---
+		const quotes = [
+			'“Guiding every learner, lighting every path.”',
+			'“Like Krishna guided Arjuna, Sarathi guides you to knowledge.”'
+		];
+		function typeQuote(idx=0) {
+			const quote = quotes[idx % quotes.length];
+			const el = document.getElementById('quote');
+			el.textContent = '';
+			let i = 0;
+			function type() {
+				if (i <= quote.length) {
+					el.textContent = quote.slice(0, i);
+					i++;
+					setTimeout(type, 32);
+				}
+			}
+			type();
+		}
+		setTimeout(() => typeQuote(0), 1200);
+
+		// --- Start Button Animation & Action ---
+		const startBtn = document.getElementById('start-btn');
+		const options = document.getElementById('options');
+		const cards = options.querySelectorAll('.slide-in');
+		startBtn.addEventListener('click', () => {
+			options.classList.remove('opacity-0','pointer-events-none');
+			options.classList.add('opacity-100');
+			setTimeout(() => {
+				cards[0].classList.add('show');
+				setTimeout(() => cards[1].classList.add('show'), 200);
+			}, 100);
+		});
+	</script>
+</body>
+</html>

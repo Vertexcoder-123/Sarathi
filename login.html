@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarathi Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .circuit-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+    }
+    .glow {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+    }
+    .glow-text {
+      text-shadow: 0 0 12px #00ffe7, 0 0 24px #00ffe7;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-white font-sans">
+  <!-- Animated SVG Circuit Background -->
+  <svg class="circuit-bg" viewBox="0 0 1920 1080" fill="none">
+    <g stroke="#00ffe7" stroke-width="2">
+      <polyline id="circuit1" points="100,200 400,200 600,400 900,400 1200,200 1600,200"/>
+      <polyline id="circuit2" points="200,800 600,800 800,600 1200,600 1500,800 1800,800"/>
+      <polyline id="circuit3" points="300,500 700,500 960,300 1300,500 1700,500"/>
+    </g>
+    <circle id="pulse1" r="8" fill="#00ffe7"/>
+    <circle id="pulse2" r="8" fill="#00ffe7"/>
+    <circle id="pulse3" r="8" fill="#00ffe7"/>
+  </svg>
+  <div id="stars"></div>
+
+  <!-- Login Card -->
+  <div class="relative z-10 w-full max-w-md mx-auto">
+    <div class="flex justify-center mb-6">
+      <img src="logo.png.jpg" alt="Sarathi Logo" class="h-16 w-16 rounded-full border-2 border-cyan-400 bg-black/60 shadow-lg">
+    </div>
+    <div class="flex justify-center mb-4">
+      <button id="studentBtn" class="px-4 py-1 rounded-l-lg bg-cyan-600 text-white font-semibold focus:outline-none glow-text">Student Login</button>
+      <button id="teacherBtn" class="px-4 py-1 rounded-r-lg bg-gray-800 text-cyan-200 font-semibold focus:outline-none">Teacher Login</button>
+    </div>
+    <div class="bg-black/80 border-2 border-cyan-400 rounded-2xl p-8 shadow-2xl glow">
+      <h2 id="loginHeading" class="text-2xl font-bold mb-6 text-center glow-text">Student Login</h2>
+      <!-- Login Form -->
+      <form id="loginForm" autocomplete="off">
+        <div class="mb-4">
+          <label for="username" class="block text-cyan-200 mb-1">Username / Email / Phone</label>
+          <input id="username" name="username" type="text" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Enter your username/email/phone">
+        </div>
+        <div class="mb-6">
+          <label for="password" class="block text-cyan-200 mb-1">Password</label>
+          <input id="password" name="password" type="password" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Enter your password">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-600 text-xl font-bold glow-text shadow-lg transition-all duration-300 hover:scale-105 hover:from-cyan-300 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-cyan-400/50">Login</button>
+      </form>
+      <div id="toSignup" class="mt-6 text-center">
+        <a href="#" class="text-cyan-300 hover:underline">New here? Create an account</a>
+      </div>
+      <!-- Signup Form (hidden by default) -->
+      <form id="signupForm" class="hidden animate__animated animate__fadeIn" autocomplete="off">
+        <div class="mb-4">
+          <label for="fullname" class="block text-cyan-200 mb-1">Full Name</label>
+          <input id="fullname" name="fullname" type="text" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Enter your full name">
+        </div>
+        <div class="mb-4">
+          <label for="class" class="block text-cyan-200 mb-1">Class</label>
+          <input id="class" name="class" type="text" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Enter your class">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-cyan-200 mb-1">Email Address</label>
+          <input id="email" name="email" type="email" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Enter your email">
+        </div>
+        <div class="mb-4">
+          <label for="signuppassword" class="block text-cyan-200 mb-1">Password</label>
+          <input id="signuppassword" name="signuppassword" type="password" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Create a password">
+        </div>
+        <div class="mb-6">
+          <label for="confirmpassword" class="block text-cyan-200 mb-1">Confirm Password</label>
+          <input id="confirmpassword" name="confirmpassword" type="password" required class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-cyan-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Confirm your password">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-600 text-xl font-bold glow-text shadow-lg transition-all duration-300 hover:scale-105 hover:from-cyan-300 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-cyan-400/50">Sign Up</button>
+      </form>
+      <div id="toLogin" class="mt-6 text-center hidden">
+        <a href="#" class="text-cyan-300 hover:underline">Already have an account? Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Animated Circuit Pulses ---
+    function animatePulse(polyId, pulseId, duration) {
+      const poly = document.getElementById(polyId);
+      const pulse = document.getElementById(pulseId);
+      const points = poly.getAttribute('points').split(' ').map(pt => pt.split(',').map(Number));
+      let t = 0, dir = 1;
+      function lerp(a, b, t) { return [a[0] + (b[0]-a[0])*t, a[1] + (b[1]-a[1])*t]; }
+      function animate() {
+        let seg = Math.floor(t);
+        let localT = t - seg;
+        if (seg >= points.length-1) { seg = points.length-2; localT = 1; }
+        const [x, y] = lerp(points[seg], points[seg+1], localT);
+        pulse.setAttribute('cx', x);
+        pulse.setAttribute('cy', y);
+        t += dir * 0.01 * (points.length-1) / (duration/16);
+        if (t >= points.length-1 || t <= 0) dir *= -1;
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+    animatePulse('circuit1', 'pulse1', 4000);
+    animatePulse('circuit2', 'pulse2', 5000);
+    animatePulse('circuit3', 'pulse3', 6000);
+
+    // --- Stars/Sparkles ---
+    function createStars() {
+      const starCount = 40;
+      const stars = document.getElementById('stars');
+      stars.innerHTML = '';
+      for (let i = 0; i < starCount; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.width = s.style.height = (Math.random()*2+1)+'px';
+        s.style.left = (Math.random()*100)+'vw';
+        s.style.top = (Math.random()*100)+'vh';
+        s.style.opacity = Math.random()*0.5+0.3;
+        s.style.animation = `twinkle ${2+Math.random()*2}s infinite alternate`;
+        stars.appendChild(s);
+      }
+    }
+    createStars();
+    window.addEventListener('resize', createStars);
+    // Twinkle animation
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }`;
+    document.head.appendChild(style);
+
+    // --- Toggle Login Type ---
+    const studentBtn = document.getElementById('studentBtn');
+    const teacherBtn = document.getElementById('teacherBtn');
+    const loginHeading = document.getElementById('loginHeading');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const toSignup = document.getElementById('toSignup');
+    const toLogin = document.getElementById('toLogin');
+
+    function setLoginType(type) {
+      if(type === 'teacher') {
+        teacherBtn.classList.add('bg-cyan-600','text-white','glow-text');
+        teacherBtn.classList.remove('bg-gray-800','text-cyan-200');
+        studentBtn.classList.remove('bg-cyan-600','text-white','glow-text');
+        studentBtn.classList.add('bg-gray-800','text-cyan-200');
+        loginHeading.textContent = 'Teacher Login';
+      } else {
+        studentBtn.classList.add('bg-cyan-600','text-white','glow-text');
+        studentBtn.classList.remove('bg-gray-800','text-cyan-200');
+        teacherBtn.classList.remove('bg-cyan-600','text-white','glow-text');
+        teacherBtn.classList.add('bg-gray-800','text-cyan-200');
+        loginHeading.textContent = 'Student Login';
+      }
+    }
+    studentBtn.addEventListener('click', () => setLoginType('student'));
+    teacherBtn.addEventListener('click', () => setLoginType('teacher'));
+
+    // --- Auto-select login type from URL ---
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get('type');
+      if(type === 'teacher') setLoginType('teacher');
+      else setLoginType('student');
+    })();
+
+    // --- Login/Signup Toggle Logic ---
+    toSignup.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginForm.classList.add('hidden');
+      toSignup.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+      toLogin.classList.remove('hidden');
+      loginHeading.textContent = 'Sign Up';
+    });
+    toLogin.addEventListener('click', function(e) {
+      e.preventDefault();
+      signupForm.classList.add('hidden');
+      toLogin.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+      toSignup.classList.remove('hidden');
+      // Restore login heading based on selected type
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get('type');
+      if(type === 'teacher') setLoginType('teacher');
+      else setLoginType('student');
+      });
+
+      // --- Login Form Submission: Redirect to dashboard and save name ---
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+        const isTeacher = teacherBtn.classList.contains('bg-cyan-600');
+        if(username && password){
+          if(isTeacher) {
+            localStorage.setItem('teacherName', username);
+            window.location.href = 'teacher_dashboard.html';
+          } else {
+            localStorage.setItem('studentName', username);
+            window.location.href = 'student_dashboard.html';
+          }
+        } else {
+          alert('Please enter login details.');
+        }
+    });
+  </script>
+</body>
+</html>

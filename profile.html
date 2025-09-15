@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - Sarathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .glow-card {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+    }
+    .glow-text {
+      text-shadow: 0 0 12px #00ffe7, 0 0 24px #00ffe7;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white font-sans">
+  <!-- Navbar -->
+  <div class="flex items-center justify-between w-full px-4 py-3 md:px-8 md:py-4 z-20 relative">
+    <!-- Logo -->
+    <div class="flex items-center">
+  <a href="home.html"><img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-md border-2 border-cyan-400 bg-black/60" style="backdrop-filter: blur(2px);"></a>
+      <span class="ml-3 text-2xl font-bold text-cyan-200 hidden sm:inline">Sarathi</span>
+    </div>
+    <!-- Back to Dashboard -->
+    <a href="student_dashboard.html" class="flex items-center text-cyan-300 hover:text-white font-semibold transition text-lg"><span class="material-icons mr-1">arrow_back</span>Back to Dashboard</a>
+  </div>
+
+  <!-- Profile Container -->
+  <main class="flex flex-col items-center justify-center flex-1 px-4 py-8">
+    <div class="w-full max-w-xl bg-black/80 border-2 border-cyan-400 rounded-2xl p-8 shadow-2xl glow-card">
+      <!-- Profile Picture & Name -->
+      <div class="flex flex-col items-center mb-6">
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=student" alt="Profile" class="h-28 w-28 rounded-full border-4 border-cyan-400 shadow-lg mb-3 bg-white object-cover">
+        <h2 id="studentName" class="text-2xl font-bold glow-text mb-1">Student Name</h2>
+        <span id="studentGrade" class="text-cyan-200 text-lg">Grade 10</span>
+      </div>
+      <!-- Personal Info -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2 text-cyan-300">Personal Information</h3>
+        <div class="space-y-1 text-cyan-100">
+          <div><span class="font-semibold">Email:</span> <span id="studentEmail">student@email.com</span></div>
+          <div><span class="font-semibold">Phone:</span> <span id="studentPhone">+91 9876543210</span></div>
+          <div><span class="font-semibold">Location:</span> <span id="studentLocation">Andhra Pradesh, India</span></div>
+        </div>
+  <button id="editProfileBtn" class="mt-4 px-5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-semibold shadow-md transition-all">Edit Profile</button>
+      </div>
+      <!-- Learning Progress -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2 text-cyan-300">Learning Progress</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex-1 bg-cyan-900/60 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold" id="completedLessons">12</div>
+            <div class="text-cyan-200 text-sm">Completed Lessons</div>
+          </div>
+          <div class="flex-1 bg-cyan-900/60 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold" id="totalPoints">850</div>
+            <div class="text-cyan-200 text-sm">Total Points</div>
+          </div>
+          <div class="flex-1 bg-cyan-900/60 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold" id="achievements">5</div>
+            <div class="text-cyan-200 text-sm">Achievements</div>
+          </div>
+        </div>
+      </div>
+      <!-- Security -->
+      <div class="mb-2">
+        <h3 class="text-lg font-semibold mb-2 text-cyan-300">Security</h3>
+        <div class="flex flex-col md:flex-row gap-4">
+          <button id="changePasswordBtn" class="flex-1 px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-md transition-all">Change Password</button>
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 rounded-2xl p-8 w-full max-w-md border-2 border-cyan-400 shadow-2xl">
+      <h3 class="text-xl font-bold mb-4 text-cyan-300">Edit Profile</h3>
+      <form id="editProfileForm" class="space-y-4">
+        <div>
+          <label class="block text-cyan-200 mb-1">Name</label>
+          <input id="editName" type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Grade</label>
+          <input id="editGrade" type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Email</label>
+          <input id="editEmail" type="email" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Phone</label>
+          <input id="editPhone" type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white">
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Location</label>
+          <input id="editLocation" type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white">
+        </div>
+        <div class="flex justify-end gap-2 mt-4">
+          <button type="button" id="cancelEditProfile" class="px-4 py-2 rounded bg-gray-700 text-cyan-200 hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-semibold">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="changePasswordModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 rounded-2xl p-8 w-full max-w-md border-2 border-blue-400 shadow-2xl">
+      <h3 class="text-xl font-bold mb-4 text-blue-300">Change Password</h3>
+      <form id="changePasswordForm" class="space-y-4">
+        <div>
+          <label class="block text-blue-200 mb-1">Current Password</label>
+          <input id="currentPassword" type="password" class="w-full px-3 py-2 rounded bg-gray-800 border border-blue-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-blue-200 mb-1">New Password</label>
+          <input id="newPassword" type="password" class="w-full px-3 py-2 rounded bg-gray-800 border border-blue-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-blue-200 mb-1">Confirm New Password</label>
+          <input id="confirmNewPassword" type="password" class="w-full px-3 py-2 rounded bg-gray-800 border border-blue-400 text-white" required>
+        </div>
+        <div class="flex justify-end gap-2 mt-4">
+          <button type="button" id="cancelChangePassword" class="px-4 py-2 rounded bg-gray-700 text-blue-200 hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-semibold">Change</button>
+        </div>
+      </form>
+    </div>
+  </div>
+          <button id="signOutBtn" class="flex-1 px-5 py-2 rounded-lg bg-pink-600 hover:bg-pink-700 text-white font-semibold shadow-md transition-all">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Load student info from localStorage (customize as needed)
+    function loadProfile() {
+      document.getElementById('studentName').textContent = localStorage.getItem('studentName') || 'Student Name';
+      document.getElementById('studentGrade').textContent = localStorage.getItem('studentGrade') || 'Grade 10';
+      document.getElementById('studentEmail').textContent = localStorage.getItem('studentEmail') || 'student@email.com';
+      document.getElementById('studentPhone').textContent = localStorage.getItem('studentPhone') || '+91 9876543210';
+      document.getElementById('studentLocation').textContent = localStorage.getItem('studentLocation') || 'Andhra Pradesh, India';
+    }
+    loadProfile();
+
+    // Edit Profile Modal Logic
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const editProfileModal = document.getElementById('editProfileModal');
+    const cancelEditProfile = document.getElementById('cancelEditProfile');
+    const editProfileForm = document.getElementById('editProfileForm');
+    editProfileBtn.onclick = function() {
+      document.getElementById('editName').value = localStorage.getItem('studentName') || '';
+      document.getElementById('editGrade').value = localStorage.getItem('studentGrade') || '';
+      document.getElementById('editEmail').value = localStorage.getItem('studentEmail') || '';
+      document.getElementById('editPhone').value = localStorage.getItem('studentPhone') || '';
+      document.getElementById('editLocation').value = localStorage.getItem('studentLocation') || '';
+      editProfileModal.classList.remove('hidden');
+    };
+    cancelEditProfile.onclick = function() {
+      editProfileModal.classList.add('hidden');
+    };
+    editProfileForm.onsubmit = function(e) {
+      e.preventDefault();
+      localStorage.setItem('studentName', document.getElementById('editName').value);
+      localStorage.setItem('studentGrade', document.getElementById('editGrade').value);
+      localStorage.setItem('studentEmail', document.getElementById('editEmail').value);
+      localStorage.setItem('studentPhone', document.getElementById('editPhone').value);
+      localStorage.setItem('studentLocation', document.getElementById('editLocation').value);
+      editProfileModal.classList.add('hidden');
+      loadProfile();
+    };
+
+    // Change Password Modal Logic (UI only)
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    const changePasswordModal = document.getElementById('changePasswordModal');
+    const cancelChangePassword = document.getElementById('cancelChangePassword');
+    const changePasswordForm = document.getElementById('changePasswordForm');
+    changePasswordBtn.onclick = function() {
+      changePasswordModal.classList.remove('hidden');
+    };
+    cancelChangePassword.onclick = function() {
+      changePasswordModal.classList.add('hidden');
+    };
+    changePasswordForm.onsubmit = function(e) {
+      e.preventDefault();
+      // You can add password change logic here
+      changePasswordModal.classList.add('hidden');
+      alert('Password changed (demo only).');
+    };
+
+    // Sign Out button
+    document.getElementById('signOutBtn').onclick = function() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    };
+  </script>
+</body>
+</html>

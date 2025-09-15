@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard - Sarathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #0a2a2f 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .glow-card {
+      box-shadow: 0 0 24px #00ffe7, 0 0 48px #00ffe733;
+      border: 2px solid #00ffe7;
+      border-radius: 1.5rem;
+      background: rgba(10, 20, 40, 0.85);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .glow-card:hover {
+      box-shadow: 0 0 48px #00ffe7, 0 0 96px #00ffe7;
+      transform: translateY(-4px) scale(1.01);
+    }
+    .glow-btn {
+      box-shadow: 0 0 12px #00ffe7, 0 0 24px #00ffe7;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .glow-btn:hover {
+      box-shadow: 0 0 32px #00ffe7, 0 0 64px #00ffe7;
+      transform: scale(1.04);
+    }
+    .scroll-table {
+      max-height: 260px;
+      overflow-y: auto;
+      display: block;
+    }
+    th, td {
+      white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col text-white font-sans">
+  <!-- Top Bar -->
+  <div class="flex flex-col md:flex-row items-center justify-between w-full px-4 py-4 md:px-10 z-20 relative">
+    <div class="flex items-center mb-2 md:mb-0">
+      <a href="home.html"><img src="logo.png.jpg" alt="Sarathi Logo" class="h-12 w-12 rounded-full shadow-md border-2 border-cyan-400 bg-black/60"></a>
+      <span class="ml-3 text-2xl font-bold text-cyan-200">Sarathi</span>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 w-full md:w-auto">
+      <h1 class="text-2xl font-bold glow-text text-center md:text-left">Welcome, Teacher <span id="teacherName">Name</span></h1>
+      <nav class="flex flex-wrap gap-2 md:gap-4 mt-2 md:mt-0 justify-center md:justify-end">
+        <a href="#" class="px-4 py-2 rounded-full bg-cyan-700/80 hover:bg-cyan-500 text-white font-semibold transition-all">Dashboard</a>
+        <a href="#leaderboard" class="px-4 py-2 rounded-full bg-cyan-700/80 hover:bg-cyan-500 text-white font-semibold transition-all">Leaderboard</a>
+        <a href="#upload-assignment" class="px-4 py-2 rounded-full bg-cyan-700/80 hover:bg-cyan-500 text-white font-semibold transition-all">Upload Assignment</a>
+        <a href="#upload-content" class="px-4 py-2 rounded-full bg-cyan-700/80 hover:bg-cyan-500 text-white font-semibold transition-all">Upload Content</a>
+        <a href="login.html" class="px-4 py-2 rounded-full bg-pink-600 hover:bg-pink-700 text-white font-semibold transition-all">Logout</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <main class="dashboard-grid grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl mx-auto px-4 py-8">
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="glow-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><span class="material-icons">leaderboard</span> Leaderboard</h2>
+      <div class="mb-4 flex flex-wrap gap-2 items-center">
+        <span class="text-cyan-200">Total Students: <span id="totalStudents">7</span></span>
+        <button id="overallBtn" class="px-3 py-1 rounded-full bg-cyan-600 text-white font-semibold glow-btn text-sm" onclick="showLeaderboard('overall')">Overall</button>
+        <button id="subjectBtn" class="px-3 py-1 rounded-full bg-cyan-600 text-white font-semibold glow-btn text-sm" onclick="showLeaderboard('subject')">Subject Wise</button>
+        <select id="subjectSelect" class="ml-2 px-2 py-1 rounded bg-gray-800 border border-cyan-400 text-white text-sm hidden">
+          <option value="Hindi">Hindi</option>
+          <option value="Telugu">Telugu</option>
+          <option value="English">English</option>
+          <option value="Maths">Maths</option>
+          <option value="Physics">Physics</option>
+          <option value="Biology">Biology</option>
+          <option value="Social">Social</option>
+        </select>
+      </div>
+      <div class="scroll-table">
+        <table class="w-full text-left border-separate border-spacing-y-2">
+          <thead>
+            <tr class="text-cyan-300 text-lg" id="leaderboardHeader">
+              <th>Rank</th>
+              <th>Student Name</th>
+              <th id="subjectCol">Subject</th>
+              <th id="scoreCol">Score</th>
+              <th id="xpCol">XP</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTable">
+            <!-- Leaderboard rows will be injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Upload Assignment Section -->
+    <section id="upload-assignment" class="glow-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><span class="material-icons">assignment</span> Upload Assignment</h2>
+      <form id="assignmentForm" class="space-y-4">
+        <div>
+          <label class="block text-cyan-200 mb-1">Assignment Title</label>
+          <input type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Description</label>
+          <textarea class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" rows="2" required></textarea>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Subject</label>
+          <select class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+            <option>Hindi</option>
+            <option>Telugu</option>
+            <option>English</option>
+            <option>Maths</option>
+            <option>Physics</option>
+            <option>Biology</option>
+            <option>Social</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Deadline</label>
+          <input type="date" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">File Upload (PDF/DOC)</label>
+          <input type="file" accept=".pdf,.doc,.docx" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-600 text-xl font-bold glow-btn shadow-lg transition-all">Upload Assignment</button>
+      </form>
+    </section>
+
+    <!-- Upload Content Section -->
+    <section id="upload-content" class="glow-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-cyan-300 mb-4 flex items-center gap-2"><span class="material-icons">cloud_upload</span> Upload Content</h2>
+      <form id="contentForm" class="space-y-4">
+        <div>
+          <label class="block text-cyan-200 mb-1">Content Title</label>
+          <input type="text" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">Subject</label>
+          <select class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white" required>
+            <option>Hindi</option>
+            <option>Telugu</option>
+            <option>English</option>
+            <option>Maths</option>
+            <option>Physics</option>
+            <option>Biology</option>
+            <option>Social</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-cyan-200 mb-1">File Upload (Video/PDF/Image)</label>
+          <input type="file" accept="video/*,application/pdf,image/*" class="w-full px-3 py-2 rounded bg-gray-800 border border-cyan-400 text-white">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-600 text-xl font-bold glow-btn shadow-lg transition-all">Upload Content</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Demo: Set teacher name (customize as needed)
+    document.getElementById('teacherName').textContent = localStorage.getItem('teacherName') || 'Name';
+
+    // --- Leaderboard Data (Demo) ---
+    const students = [
+      { name: 'Arjun', scores: { Hindi: 90, Telugu: 85, English: 95, Maths: 98, Physics: 93, Biology: 91, Social: 87 }, xp: 1200 },
+      { name: 'Priya', scores: { Hindi: 88, Telugu: 90, English: 95, Maths: 92, Physics: 89, Biology: 90, Social: 91 }, xp: 1150 },
+      { name: 'Ravi', scores: { Hindi: 80, Telugu: 82, English: 85, Maths: 90, Physics: 93, Biology: 88, Social: 85 }, xp: 1100 },
+      { name: 'Meena', scores: { Hindi: 91, Telugu: 87, English: 89, Maths: 85, Physics: 88, Biology: 91, Social: 90 }, xp: 1080 },
+      { name: 'Rahul', scores: { Hindi: 90, Telugu: 80, English: 82, Maths: 88, Physics: 85, Biology: 87, Social: 89 }, xp: 1050 },
+      { name: 'Sunita', scores: { Hindi: 85, Telugu: 88, English: 90, Maths: 86, Physics: 84, Biology: 85, Social: 89 }, xp: 1020 },
+      { name: 'Vikram', scores: { Hindi: 87, Telugu: 88, English: 86, Maths: 84, Physics: 82, Biology: 83, Social: 88 }, xp: 1000 },
+    ];
+    document.getElementById('totalStudents').textContent = students.length;
+
+    function showLeaderboard(type) {
+      const table = document.getElementById('leaderboardTable');
+      const subjectSelect = document.getElementById('subjectSelect');
+      const subjectCol = document.getElementById('subjectCol');
+      const scoreCol = document.getElementById('scoreCol');
+      const xpCol = document.getElementById('xpCol');
+      if (type === 'overall') {
+        subjectSelect.classList.add('hidden');
+        subjectCol.textContent = 'Avg';
+        scoreCol.textContent = 'Points';
+        xpCol.classList.remove('hidden');
+        // Calculate overall average and points
+        const rows = students.map((s, i) => {
+          const avg = (Object.values(s.scores).reduce((a, b) => a + b, 0) / 7).toFixed(1);
+          const points = Object.values(s.scores).reduce((a, b) => a + b, 0);
+          return `<tr><td>${i+1}</td><td>${s.name}</td><td>${avg}</td><td>${points}</td><td>${s.xp}</td></tr>`;
+        });
+        table.innerHTML = rows.join('');
+      } else if (type === 'subject') {
+        subjectSelect.classList.remove('hidden');
+        xpCol.classList.add('hidden');
+        updateSubjectLeaderboard(subjectSelect.value);
+      }
+    }
+
+    function updateSubjectLeaderboard(subject) {
+      const table = document.getElementById('leaderboardTable');
+      const subjectCol = document.getElementById('subjectCol');
+      const scoreCol = document.getElementById('scoreCol');
+      subjectCol.textContent = 'Subject';
+      scoreCol.textContent = 'Score';
+      // Sort by subject score
+      const sorted = [...students].sort((a, b) => b.scores[subject] - a.scores[subject]);
+      const rows = sorted.map((s, i) => `<tr><td>${i+1}</td><td>${s.name}</td><td>${subject}</td><td>${s.scores[subject]}</td></tr>`);
+      table.innerHTML = rows.join('');
+    }
+
+    // Button event listeners
+    document.getElementById('overallBtn').onclick = function(e) { e.preventDefault(); showLeaderboard('overall'); };
+    document.getElementById('subjectBtn').onclick = function(e) { e.preventDefault(); showLeaderboard('subject'); };
+    document.getElementById('subjectSelect').onchange = function() { updateSubjectLeaderboard(this.value); };
+
+    // Show overall leaderboard by default
+    showLeaderboard('overall');
+
+    // Assignment upload
+    document.getElementById('assignmentForm').onsubmit = function(e) {
+      e.preventDefault();
+      const form = this;
+      const title = form.querySelector('input[type="text"]').value;
+      const desc = form.querySelector('textarea').value;
+      const subject = form.querySelector('select').value;
+      const deadline = form.querySelector('input[type="date"]').value;
+      const fileInput = form.querySelector('input[type="file"]');
+      let fileName = '';
+      let fileUrl = '';
+      if (fileInput && fileInput.files.length) {
+        fileName = fileInput.files[0].name;
+        // Simulate file download by storing as data URL (for demo only, not real upload)
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          fileUrl = ev.target.result;
+          saveAssignment();
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveAssignment();
+      }
+      function saveAssignment() {
+        const assignment = { title, desc, deadline, posted: new Date().toLocaleString(), fileName, fileUrl };
+        let assignments = JSON.parse(localStorage.getItem('assignments_' + subject)) || [];
+        assignments.push(assignment);
+        localStorage.setItem('assignments_' + subject, JSON.stringify(assignments));
+        alert('Assignment Uploaded Successfully!');
+        form.reset();
+      }
+    };
+    // Content upload
+    document.getElementById('contentForm').onsubmit = function(e) {
+      e.preventDefault();
+      const form = this;
+      const title = form.querySelector('input[type="text"]').value;
+      const subject = form.querySelector('select').value;
+      // File upload is demo only
+      const content = { title, posted: new Date().toLocaleString() };
+      let contents = JSON.parse(localStorage.getItem('contents_' + subject)) || [];
+      contents.push(content);
+      localStorage.setItem('contents_' + subject, JSON.stringify(contents));
+      alert('Content Uploaded Successfully!');
+      this.reset();
+    };
+  </script>
+</body>
+</html>
