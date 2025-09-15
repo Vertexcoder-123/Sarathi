@@ -4,7 +4,7 @@
   "description": "A gamified learning platform using Phaser.js and Firebase.",
   "main": "src/main.js",
   "scripts": {
-    "start": "http-server -c-1",
+    "start": "npx http-server -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
