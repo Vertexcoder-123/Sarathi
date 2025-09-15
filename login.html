@@ -213,9 +213,10 @@
         e.preventDefault();
         let username = document.getElementById('username').value;
         let password = document.getElementById('password').value;
-        const isTeacher = teacherBtn.classList.contains('bg-cyan-600');
+        // Determine login type
+        let loginType = loginHeading.textContent.toLowerCase().includes('teacher') ? 'teacher' : 'student';
         if(username && password){
-          if(isTeacher) {
+          if(loginType === 'teacher') {
             localStorage.setItem('teacherName', username);
             window.location.href = 'teacher_dashboard.html';
           } else {
@@ -225,7 +226,7 @@
         } else {
           alert('Please enter login details.');
         }
-    });
+      });
   </script>
 </body>
 </html>
