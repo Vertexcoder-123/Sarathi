@@ -1,8 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Treasure Hunt</title>
+    <title>Educational Games - Smart India Hackathon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Phaser Engine -->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"></script>
+    
+    <!-- Firebase Config -->
+    <script type="module" src="firebase-config.js"></script>
+
     <style>
         body {
             display: flex;
@@ -10,16 +24,57 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #000;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            font-family: Arial, sans-serif;
+        }
+        .offline-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff9800;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <div id="offline-banner" class="offline-banner">You are currently offline. Some features may be limited.</div>
+    
+    <!-- Game Scripts -->
+    <script src="gameProgress.js"></script>
     <script src="scenes/mainMenu.js"></script>
     <script src="scenes/treasureHunt.js"></script>
     <script src="scenes/interactiveQuiz.js"></script>
     <script src="scenes/matchingPairs.js"></script>
     <script src="scenes/simulationGame.js"></script>
     <script src="game.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+
+            // Handle offline/online events
+            window.addEventListener('online', function() {
+                document.getElementById('offline-banner').style.display = 'none';
+            });
+
+            window.addEventListener('offline', function() {
+                document.getElementById('offline-banner').style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>

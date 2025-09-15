@@ -1,0 +1,394 @@
+{
+  "version": "1.0",
+  "subjects": {
+    "science": {
+      "title": "Science",
+      "description": "Explore the wonders of science through interactive learning",
+      "missions": [
+        {
+          "id": "science_energy",
+          "title": "Energy and Its Forms",
+          "grade": 6,
+          "prerequisite": null,
+          "estimatedTime": "30 minutes",
+          "phases": {
+            "learn": {
+              "content": [
+                {
+                  "type": "text",
+                  "title": "Introduction to Energy",
+                  "content": "Energy is the ability to do work. It exists in many forms such as heat, light, chemical, electrical, and mechanical energy."
+                },
+                {
+                  "type": "image",
+                  "title": "Types of Energy",
+                  "url": "assets/lessons/science/energy-types.png",
+                  "caption": "Different forms of energy in our daily life"
+                },
+                {
+                  "type": "video",
+                  "title": "Energy Transformations",
+                  "url": "assets/lessons/science/energy-transform.mp4",
+                  "duration": "3:45"
+                },
+                {
+                  "type": "interactive",
+                  "title": "Energy Conversion Demo",
+                  "description": "Click on different objects to see energy transformations",
+                  "interactionType": "clickable-scene"
+                }
+              ]
+            },
+            "play": {
+              "gameId": "treasureHunt",
+              "config": {
+                "theme": "energy",
+                "difficulty": "beginner",
+                "objectives": [
+                  "Identify different forms of energy",
+                  "Match energy types with real-world examples",
+                  "Understand energy transformations"
+                ],
+                "gameItems": {
+                  "collectibles": [
+                    {
+                      "id": "solar_panel",
+                      "type": "light_to_electrical"
+                    },
+                    {
+                      "id": "battery",
+                      "type": "chemical_to_electrical"
+                    },
+                    {
+                      "id": "windmill",
+                      "type": "mechanical_to_electrical"
+                    }
+                  ],
+                  "obstacles": [
+                    {
+                      "id": "energy_puzzle",
+                      "type": "match_transformation"
+                    }
+                  ]
+                },
+                "timeLimit": 300,
+                "minScore": 70
+              }
+            },
+            "conquer": {
+              "quizTitle": "Master of Energy",
+              "passingScore": 80,
+              "timeLimit": 600,
+              "questions": [
+                {
+                  "id": "q1",
+                  "type": "mcq",
+                  "question": "Which form of energy is stored in food?",
+                  "options": [
+                    "Chemical energy",
+                    "Kinetic energy",
+                    "Sound energy",
+                    "Light energy"
+                  ],
+                  "correct": 0,
+                  "explanation": "Food contains chemical energy stored in chemical bonds, which is released during digestion."
+                },
+                {
+                  "id": "q2",
+                  "type": "matching",
+                  "question": "Match the energy transformation with its example:",
+                  "pairs": [
+                    {
+                      "item": "Solar Panel",
+                      "match": "Light to Electrical"
+                    },
+                    {
+                      "item": "Car Engine",
+                      "match": "Chemical to Mechanical"
+                    },
+                    {
+                      "item": "Light Bulb",
+                      "match": "Electrical to Light and Heat"
+                    }
+                  ]
+                },
+                {
+                  "id": "q3",
+                  "type": "dragdrop",
+                  "question": "Arrange the energy transformations in a hydroelectric dam:",
+                  "items": [
+                    "Potential Energy",
+                    "Kinetic Energy",
+                    "Mechanical Energy",
+                    "Electrical Energy"
+                  ],
+                  "correct_sequence": [0, 1, 2, 3]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "science_matter",
+          "title": "States of Matter",
+          "grade": 6,
+          "prerequisite": "science_energy",
+          "estimatedTime": "45 minutes",
+          "phases": {
+            "learn": {
+              "content": [
+                {
+                  "type": "text",
+                  "title": "Introduction to Matter",
+                  "content": "Matter is anything that has mass and takes up space. It exists in three main states: solid, liquid, and gas."
+                },
+                {
+                  "type": "simulation",
+                  "title": "Particle Behavior",
+                  "description": "Interactive simulation showing particle movement in different states",
+                  "config": {
+                    "particles": true,
+                    "temperature": true,
+                    "stateChanges": true
+                  }
+                },
+                {
+                  "type": "image",
+                  "title": "State Changes",
+                  "url": "assets/lessons/science/state-changes.png",
+                  "caption": "Processes of melting, freezing, evaporation, and condensation"
+                }
+              ]
+            },
+            "play": {
+              "gameId": "simulationGame",
+              "config": {
+                "theme": "matter",
+                "difficulty": "intermediate",
+                "objectives": [
+                  "Control temperature to change states",
+                  "Collect particles in different states",
+                  "Complete state transformation cycles"
+                ],
+                "simParams": {
+                  "minTemp": 0,
+                  "maxTemp": 100,
+                  "particleCount": 100,
+                  "boundaryConditions": "periodic"
+                },
+                "timeLimit": 400,
+                "minScore": 75
+              }
+            },
+            "conquer": {
+              "quizTitle": "States of Matter Master",
+              "passingScore": 80,
+              "timeLimit": 600,
+              "questions": [
+                {
+                  "id": "q1",
+                  "type": "mcq",
+                  "question": "What happens to particles when matter changes from liquid to gas?",
+                  "options": [
+                    "They move faster and further apart",
+                    "They move slower and closer together",
+                    "They stop moving",
+                    "They disappear"
+                  ],
+                  "correct": 0,
+                  "explanation": "During evaporation, particles gain energy and move faster, breaking free from other particles."
+                },
+                {
+                  "id": "q2",
+                  "type": "ordering",
+                  "question": "Order the states of matter from lowest to highest particle energy:",
+                  "items": [
+                    "Solid",
+                    "Liquid",
+                    "Gas",
+                    "Plasma"
+                  ],
+                  "correct_sequence": [0, 1, 2, 3]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "mathematics": {
+      "title": "Mathematics",
+      "description": "Master mathematical concepts through engaging challenges",
+      "missions": [
+        {
+          "id": "math_fractions",
+          "title": "Understanding Fractions",
+          "grade": 6,
+          "prerequisite": null,
+          "estimatedTime": "40 minutes",
+          "phases": {
+            "learn": {
+              "content": [
+                {
+                  "type": "text",
+                  "title": "What are Fractions?",
+                  "content": "Fractions represent parts of a whole. They consist of a numerator (top number) and denominator (bottom number)."
+                },
+                {
+                  "type": "interactive",
+                  "title": "Fraction Visualization",
+                  "description": "Drag to divide shapes into equal parts",
+                  "interactionType": "fraction-builder"
+                },
+                {
+                  "type": "image",
+                  "title": "Fraction Operations",
+                  "url": "assets/lessons/math/fraction-operations.png",
+                  "caption": "Basic operations with fractions"
+                }
+              ]
+            },
+            "play": {
+              "gameId": "matchingPairs",
+              "config": {
+                "theme": "fractions",
+                "difficulty": "beginner",
+                "objectives": [
+                  "Match equivalent fractions",
+                  "Convert between fractions and decimals",
+                  "Identify proper and improper fractions"
+                ],
+                "pairs": [
+                  {
+                    "visual": "1/2",
+                    "match": "2/4"
+                  },
+                  {
+                    "visual": "3/4",
+                    "match": "0.75"
+                  },
+                  {
+                    "visual": "5/2",
+                    "match": "2.5"
+                  }
+                ],
+                "timeLimit": 300,
+                "minScore": 70
+              }
+            },
+            "conquer": {
+              "quizTitle": "Fraction Master",
+              "passingScore": 80,
+              "timeLimit": 600,
+              "questions": [
+                {
+                  "id": "q1",
+                  "type": "mcq",
+                  "question": "Which fraction is equivalent to 2/6?",
+                  "options": [
+                    "1/3",
+                    "3/9",
+                    "4/6",
+                    "1/4"
+                  ],
+                  "correct": 0,
+                  "explanation": "2/6 can be simplified by dividing both numbers by 2, resulting in 1/3"
+                },
+                {
+                  "id": "q2",
+                  "type": "numeric",
+                  "question": "Convert 3/4 to a decimal",
+                  "answer": 0.75,
+                  "tolerance": 0.01
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "language": {
+      "title": "Language Arts",
+      "description": "Develop language skills through interactive learning",
+      "missions": [
+        {
+          "id": "lang_vocabulary",
+          "title": "Building Vocabulary",
+          "grade": 6,
+          "prerequisite": null,
+          "estimatedTime": "35 minutes",
+          "phases": {
+            "learn": {
+              "content": [
+                {
+                  "type": "text",
+                  "title": "Word Families",
+                  "content": "Word families are groups of words that share common patterns in spelling and meaning."
+                },
+                {
+                  "type": "audio",
+                  "title": "Word Pronunciations",
+                  "url": "assets/lessons/language/pronunciations.mp3",
+                  "transcript": "Listen to the correct pronunciation of commonly confused words"
+                }
+              ]
+            },
+            "play": {
+              "gameId": "wordPuzzle",
+              "config": {
+                "theme": "vocabulary",
+                "difficulty": "beginner",
+                "objectives": [
+                  "Find hidden words",
+                  "Match words with meanings",
+                  "Complete word families"
+                ],
+                "wordList": [
+                  {
+                    "word": "describe",
+                    "category": "verbs",
+                    "difficulty": 1
+                  },
+                  {
+                    "word": "adventure",
+                    "category": "nouns",
+                    "difficulty": 2
+                  }
+                ],
+                "timeLimit": 300,
+                "minScore": 70
+              }
+            },
+            "conquer": {
+              "quizTitle": "Vocabulary Master",
+              "passingScore": 80,
+              "timeLimit": 600,
+              "questions": [
+                {
+                  "id": "q1",
+                  "type": "mcq",
+                  "question": "Which word is a synonym for 'happy'?",
+                  "options": [
+                    "joyful",
+                    "angry",
+                    "sad",
+                    "tired"
+                  ],
+                  "correct": 0,
+                  "explanation": "Joyful means feeling or expressing great happiness."
+                },
+                {
+                  "id": "q2",
+                  "type": "fill-blanks",
+                  "question": "Complete the sentence: The _____ fox _____ over the lazy dog.",
+                  "answers": ["quick", "jumps"],
+                  "wordBank": ["quick", "jumps", "slow", "runs"]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Gamified Learning Platform",
+  "short_name": "Learn & Play",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#2d2d2d",
+  "theme_color": "#4CAF50",
+  "description": "An offline-first, gamified PWA for rural education.",
+  "icons": [
+    {
+      "src": "assets/ui/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/ui/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
