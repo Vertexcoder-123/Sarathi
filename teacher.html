@@ -3,398 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard - SARATHI Learning Platform</title>
-
-    <!-- Firebase SDK -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"></script>
-
+    <title>Teacher Dashboard - SARATHI</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2C3E50">
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #27ae60;
-            --accent-color: #e74c3c;
-            --text-color: #2c3e50;
-            --background-color: #f5f5f5;
-            --card-background: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #ECF0F1;
+            --text-color: #34495E;
+            --card-bg-color: #FFFFFF;
+            --sidebar-width: 250px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--background-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
             color: var(--text-color);
-        }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
+            display: flex;
         }
 
         .sidebar {
-            background: var(--primary-color);
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
             color: white;
-            padding: 2rem;
-            position: fixed;
             height: 100vh;
-            width: 250px;
+            position: fixed;
+            padding-top: 20px;
         }
 
-        .sidebar-header {
-            margin-bottom: 2rem;
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .nav-menu {
-            list-style: none;
+        .sidebar .nav-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .nav-item {
-            margin: 1rem 0;
-            padding: 0.5rem;
+        .sidebar .nav-item {
+            padding: 15px 20px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            transition: background-color 0.2s;
         }
 
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .sidebar .nav-item:hover, .sidebar .nav-item.active {
+            background-color: var(--secondary-color);
         }
 
-        .nav-item.active {
-            background: var(--secondary-color);
+        .main-dashboard-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 30px;
         }
 
-        .main-content {
-            padding: 2rem;
-            margin-left: 250px;
+        .dashboard-view {
+            display: none; /* Hidden by default */
+        }
+
+        .dashboard-view.active {
+            display: block; /* Shown when active */
         }
 
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 20px;
         }
 
-        .class-selector {
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+        /* Card styles for metrics and charts */
+        .card {
+            background: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
         }
 
+        /* Grid for overview metrics */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .metric-card {
-            background: var(--card-background);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .metric-title {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .metric-trend {
-            font-size: 0.9rem;
-            color: var(--secondary-color);
-        }
-
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .chart-card {
-            background: var(--card-background);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .student-list {
-            background: var(--card-background);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
+        /* Table for student list */
         .student-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .student-table th,
-        .student-table td {
-            padding: 1rem;
+        .student-table th, .student-table td {
+            padding: 12px;
+            border-bottom: 1px solid #DDD;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
-        .student-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--secondary-color);
-            transition: width 0.3s ease;
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            background: var(--secondary-color);
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .action-btn:hover {
-            background: #219a52;
-        }
-
-        .report-section {
-            display: none;
-            padding: 2rem;
-        }
-
-        .report-filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-select {
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .knowledge-gaps {
-            background: var(--card-background);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 2rem;
-        }
-
-        .gap-item {
-            padding: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .gap-subject {
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        .student-details {
-            display: none;
-            padding: 2rem;
-        }
-
+    </style>
+    <style>
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--secondary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            z-index: 9999;
+            color: white;
+            font-size: 2em;
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>Teacher Dashboard</h2>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item active" data-view="overview">Overview</li>
-                <li class="nav-item" data-view="students">Student Progress</li>
-                <li class="nav-item" data-view="reports">Reports</li>
-                <li class="nav-item" data-view="gaps">Knowledge Gaps</li>
-            </ul>
-        </aside>
+    <div class="loading-overlay" id="loading-overlay">
+        <div>Loading...</div>
+    </div>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Dashboard Overview -->
-            <div id="overview-section">
-                <div class="dashboard-header">
-                    <h1>Class Performance Overview</h1>
-                    <select class="class-selector" id="class-select">
-                        <option value="">Select Class</option>
-                    </select>
+    <aside class="sidebar">
+        <h2>SARATHI</h2>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-view="overview">Class Overview</li>
+            <li class="nav-item" data-view="student-list">Student List</li>
+            <li class="nav-item" data-view="knowledge-gaps">Knowledge Gaps</li>
+            <li class="nav-item" data-view="reports">Generate Reports</li>
+        </ul>
+    </aside>
+
+    <main class="main-dashboard-content">
+        <header class="dashboard-header">
+            <h1 id="dashboard-title">Class Overview</h1>
+            <select id="class-selector">
+                <!-- Class options will be loaded here -->
+            </select>
+        </header>
+
+        <!-- Class Overview View -->
+        <section id="overview-view" class="dashboard-view active">
+            <div class="metrics-grid">
+                <div class="card">
+                    <h4>Avg. Performance</h4>
+                    <p id="metric-avg-performance">--%</p>
                 </div>
-
-                <!-- Key Metrics -->
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Average Performance</div>
-                        <div class="metric-value">78%</div>
-                        <div class="metric-trend">↑ 5% from last month</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-title">Active Students</div>
-                        <div class="metric-value">42/45</div>
-                        <div class="metric-trend">93% engagement rate</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-title">Missions Completed</div>
-                        <div class="metric-value">156</div>
-                        <div class="metric-trend">↑ 12 this week</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-title">Average Time Spent</div>
-                        <div class="metric-value">2.5h</div>
-                        <div class="metric-trend">per student/week</div>
-                    </div>
+                <div class="card">
+                    <h4>Active Students</h4>
+                    <p id="metric-active-students">--/--</p>
                 </div>
-
-                <!-- Performance Charts -->
-                <div class="charts-container">
-                    <div class="chart-card">
-                        <h3>Subject Performance</h3>
-                        <canvas id="subject-performance-chart"></canvas>
-                    </div>
-                    <div class="chart-card">
-                        <h3>Weekly Progress</h3>
-                        <canvas id="weekly-progress-chart"></canvas>
-                    </div>
+                <div class="card">
+                    <h4>Missions Completed</h4>
+                    <p id="metric-missions-completed">--</p>
                 </div>
-
-                <!-- Student List -->
-                <div class="student-list">
-                    <h3>Student Progress Overview</h3>
-                    <table class="student-table">
-                        <thead>
-                            <tr>
-                                <th>Student Name</th>
-                                <th>Overall Progress</th>
-                                <th>Last Active</th>
-                                <th>Performance</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student-list-body">
-                            <!-- Student rows will be dynamically added here -->
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <h4>Knowledge Gaps</h4>
+                    <p id="metric-knowledge-gaps">--</p>
                 </div>
             </div>
+            <div class="card">
+                <h3>Subject Performance</h3>
+                <canvas id="subject-performance-chart"></canvas>
+            </div>
+        </section>
 
-            <!-- Student Progress Section -->
-            <div id="students-section" class="student-details" style="display: none;">
-                <div class="dashboard-header">
-                    <h2>Student Details</h2>
-                    <button class="action-btn" onclick="goBack()">Back</button>
-                </div>
-                <div class="student-progress-content">
-                    <!-- Will be populated dynamically -->
+        <!-- Knowledge Gaps View -->
+        <section id="knowledge-gaps-view" class="dashboard-view">
+            <div class="card">
+                <h3>Commonly Misunderstood Topics</h3>
+                <div id="knowledge-gaps-container">
+                    <!-- Analysis results will be dynamically inserted here -->
                 </div>
             </div>
+        </section>
 
-            <!-- Reports Section -->
-            <div id="reports-section" class="report-section" style="display: none;">
-                <div class="dashboard-header">
-                    <h2>Performance Reports</h2>
-                    <div class="report-filters">
-                        <select class="filter-select" id="report-type">
-                            <option value="class">Class Report</option>
-                            <option value="individual">Individual Report</option>
-                            <option value="subject">Subject Report</option>
-                        </select>
-                        <select class="filter-select" id="time-period">
-                            <option value="week">This Week</option>
-                            <option value="month">This Month</option>
-                            <option value="quarter">This Quarter</option>
-                        </select>
-                        <button class="action-btn" onclick="generateReport()">Generate Report</button>
+        <!-- Student List View -->
+        <section id="student-list-view" class="dashboard-view">
+            <div class="card">
+                <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Overall Progress</th>
+                            <th>Last Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-list-tbody">
+                        <!-- Student rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reports View -->
+        <section id="reports-view" class="dashboard-view">
+            <div class="card">
+                <h3>Generate a New Report</h3>
+                <!-- Report generation form will go here -->
+            </div>
+            <div class="card">
+                <h3>Generated Reports</h3>
+                <div id="report-output">
+                    <!-- Report content will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Reports View -->
+            <section id="reports-view" class="dashboard-view">
+                <div class="card">
+                    <h3>Generate a New Report</h3>
+                    <!-- Report generation form will go here -->
+                </div>
+                <div class="card">
+                    <h3>Generated Reports</h3>
+                    <div id="report-output">
+                        <!-- Report content will be displayed here -->
                     </div>
                 </div>
-                <div id="report-content">
-                    <!-- Report content will be dynamically generated here -->
-                </div>
-            </div>
+            </section>
 
-            <!-- Knowledge Gaps Section -->
-            <div id="gaps-section" class="report-section" style="display: none;">
-                <div class="dashboard-header">
-                    <h2>Knowledge Gaps Analysis</h2>
-                </div>
-                <div class="knowledge-gaps">
-                    <!-- Will be populated dynamically -->
-                </div>
-            </div>
         </main>
-    </div>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" style="display: none;">
-        <div class="spinner"></div>
-    </div>
+        <!-- Application Scripts -->
+        <script type="module" src="./src/components/teacherDashboard.js"></script>
+        
+        <!-- Main Entry Point for Teacher Dashboard -->
+        <script type="module" src="./src/teacher_main.js"></script>
 
-    <!-- Firebase Config -->
-    <script src="firebase-config.js"></script>
-    
-    <!-- Custom Scripts -->
-    <script src="teacherDashboard.js"></script>
-</body>
-</html>
+    </body>
+    </html>

@@ -1,0 +1,16 @@
+{
+  "name": "gamification-phaser-js",
+  "version": "1.0.0",
+  "description": "A gamified learning platform using Phaser.js and Firebase.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "http-server -c-1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

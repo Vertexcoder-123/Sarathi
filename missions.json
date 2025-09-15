@@ -213,6 +213,60 @@
               ]
             }
           }
+        },
+        {
+          "id": "mission_water_purifier",
+          "title": "Mission: The Water Purifier",
+          "description": "Learn how filtration works and build a virtual water purifier.",
+          "phases": {
+            "learn": {
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Welcome, Agent! Your mission is to understand how water purification works. Clean water is essential for life, and filtration is a key step in making water safe to drink."
+                },
+                {
+                  "type": "image",
+                  "url": "assets/ui/filtration_diagram.png",
+                  "caption": "This diagram shows the layers of a simple filter: gravel at the bottom for large debris, then sand for smaller particles, and charcoal on top to remove impurities."
+                },
+                {
+                  "type": "text",
+                  "content": "Each layer has a specific job. The goal is to arrange them correctly to get the cleanest water possible."
+                }
+              ]
+            },
+            "play": {
+              "gameId": "simulationGame",
+              "config": {
+                "objective": "Drag and drop the filter layers into the container in the correct order to clean the muddy water."
+              }
+            },
+            "conquer": {
+              "questions": [
+                {
+                  "question": "Which material is best for removing the smallest impurities and chemicals?",
+                  "options": [
+                    "Gravel",
+                    "Sand",
+                    "Charcoal",
+                    "Leaves"
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "question": "Why is the gravel layer typically at the bottom?",
+                  "options": [
+                    "To add minerals to the water",
+                    "To remove large debris like twigs and leaves first",
+                    "To kill bacteria with its sharp edges",
+                    "Because it is the heaviest"
+                  ],
+                  "correctAnswer": 1
+                }
+              ]
+            }
+          }
         }
       ]
     },

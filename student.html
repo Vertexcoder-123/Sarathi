@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARATHI Learning Platform</title>
+    <meta name="theme-color" content="#4A90E2">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50E3C2;
+            --background-color: #F4F7F6;
+            --text-color: #333;
+            --card-bg-color: #FFFFFF;
+            --header-height: 60px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .app-header {
+            height: var(--header-height);
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .app-header h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* View Containers */
+        .view {
+            display: none; /* Hide all views by default */
+        }
+
+        #mission-select-view {
+            display: block; /* Show mission select by default */
+        }
+
+        #play-view-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            min-height: calc(100vh - var(--header-height) - 40px); /* Adjust for padding */
+        }
+
+        /* Basic card style for missions */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .mission-card {
+            background: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Achievements Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg-color);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .achievements-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-item {
+            text-align: center;
+            opacity: 0.5; /* Locked by default */
+        }
+
+        .achievement-item.unlocked {
+            opacity: 1;
+        }
+
+        .achievement-item img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-table th {
+            background-color: #f8f9fa;
+        }
+
+        .leaderboard-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Placeholder styles for other views */
+        #learn-view, #conquer-view {
+            padding: 20px;
+            background: var(--card-bg-color);
+            border-radius: 8px;
+        }
+    </style>
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div>Loading...</div>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1>SARATHI</h1>
+            <div id="student-profile">
+                <button id="leaderboard-btn">Leaderboard</button>
+                <button id="achievements-btn">My Badges</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Mission Selection Screen -->
+            <div id="mission-select-view" class="view">
+                <h2>Choose Your Mission</h2>
+                <div id="mission-grid" class="mission-grid">
+                    <!-- Mission cards will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Leaderboard View -->
+            <div id="leaderboard-view" class="view">
+                <h2>Top Students</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>XP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-tbody">
+                        <!-- Leaderboard rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- "Learn" Phase Viewer -->
+            <div id="learn-view" class="view">
+                <h2 id="learn-title"></h2>
+                <div id="learn-content"></div>
+                <button id="start-play-phase-btn">I'm Ready to Play!</button>
+            </div>
+
+            <!-- Phaser Game Container -->
+            <div id="play-view-container" class="view">
+                <!-- The Phaser game canvas will be injected here -->
+            </div>
+
+            <!-- "Conquer" Quiz View -->
+            <div id="conquer-view" class="view">
+                <h2 id="quiz-title"></h2>
+                <div id="quiz-content"></div>
+                <button id="finish-mission-btn">Finish Mission</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievements-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+            <h2>My Achievements</h2>
+            <div id="achievements-list" class="achievements-list">
+                <!-- Achievements will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts will be added later -->
+    <!-- Phaser Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    
+    <!-- Phaser -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+
+    <!-- Application Scripts -->
+    <!-- Core Student-Side Logic -->
+    <script type="module" src="./src/utils/gameProgress.js"></script>
+    <script type="module" src="./src/utils/achievements.js"></script>
+    <script type="module" src="./src/utils/leaderboard.js"></script>
+    <script type="module" src="./src/components/studentDashboard.js"></script>
+    
+    <!-- Main Application Entry Point -->
+    <script type="module" src="./src/main.js"></script>
+
+</body>
+</html>

@@ -1,21 +1,33 @@
-const CACHE_NAME = 'gamified-learning-v2';
+const CACHE_NAME = 'gamified-learning-v3'; // Incremented version
 const ASSET_CACHE_NAME = 'gamified-learning-assets-v1';
 
 const CORE_ASSETS = [
     '/',
+    // HTML Files
     'index.html',
-    'game.js',
-    'firebase-config.js',
+    'teacher.html',
+
+    // Core JSON
     'manifest.json',
     'missions.json',
-    'teacher.html',
-    'teacherDashboard.js',
+
+    // Main Entry Points
+    'main.js',
+    'teacher_main.js',
+
+    // Student-Side Scripts
     'studentDashboard.js',
-    'studentAnalytics.js',
-    'reportingSystem.js',
-    'achievements.js',
     'gameProgress.js',
-    'scenes/mainMenu.js',
+    'achievements.js',
+    'game.js', // Base game file
+
+    // Teacher-Side Scripts
+    'teacherDashboard.js',
+
+    // Shared Scripts
+    'firebase-config.js',
+
+    // All Game Scenes
     'scenes/interactiveQuiz.js',
     'scenes/matchingPairs.js',
     'scenes/simulationGame.js',
